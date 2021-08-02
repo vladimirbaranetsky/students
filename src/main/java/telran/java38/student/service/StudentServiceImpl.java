@@ -3,6 +3,7 @@ package telran.java38.student.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	StudentMongoRepository studentRepository;
+	
+	@Autowired
+	ModelMapper modelMapper;
 
 	@Override
 	public boolean addStudent(StudentBaseDto studentCreateDto) {
@@ -46,8 +50,9 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	private StudentDto convertToStudentDto(Student student) {
-		return StudentDto.builder().id(student.getId()).name(student.getName()).scores(student.getScores())
-				.group(student.getGroup()).build();
+//		return StudentDto.builder().id(student.getId()).name(student.getName()).scores(student.getScores())
+//				.group(student.getGroup()).build();
+		return modelMapper.map(student, StudentDto.class);
 	}
 
 	@Override
